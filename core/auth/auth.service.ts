@@ -40,6 +40,11 @@ export class AuthService {
     return this.apiService.login({ email, password }).pipe(
       tap(response => {
         if (response.success) {
+          // Save token and user data to localStorage
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('authToken', response.data.access_token);
+            localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+          }
           this.currentUserSubject.next(response.data.user);
           this.isAuthenticatedSubject.next(true);
         }
