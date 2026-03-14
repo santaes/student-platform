@@ -227,10 +227,9 @@ import { EmptyStateComponent } from '../../shared/components/empty-state.compone
 export class ResourcesComponent {
   private apiService = inject(ApiService);
   private authService = inject(AuthService);
-  private formControl = inject(FormControl);
 
   resources = signal<Resource[]>([]);
-  searchControl = inject(FormControl);
+  searchControl = new FormControl('');
   isLoading = signal(true);
 
   currentUser = computed(() => this.authService.getCurrentUser());
@@ -308,12 +307,21 @@ export class ResourcesComponent {
 
   downloadResource(resource: Resource): void {
     console.log('Download resource:', resource.title);
-    // In a real app, this would trigger the actual download
-    window.open(resource.downloadUrl, '_blank');
-    
+
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = resource.fileUrl || resource.downloadUrl;
+    link.download = resource.originalName || resource.title;
+    link.target = '_blank';
+
+    // Add to DOM temporarily and click
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
     // Increment download count locally
-    const updatedResources = this.resources().map(r => 
-      r.id === resource.id 
+    const updatedResources = this.resources().map(r =>
+      r.id === resource.id
         ? { ...r, downloadCount: (r.downloadCount || 0) + 1 }
         : r
     );

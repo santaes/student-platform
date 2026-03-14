@@ -107,10 +107,12 @@ export interface Resource {
   fileType: string;
   fileSize: number;
   downloadUrl: string;
+  fileUrl: string;
   category: string;
-  fileName: string;
-  originalName?: string;
   downloadCount?: number;
+  fileName?: string;
+  originalName?: string;
+  mimeType?: string;
   isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
