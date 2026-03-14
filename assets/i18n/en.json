@@ -1,0 +1,85 @@
+{
+  "HOME": {
+    "TITLE": "Student Learning Platform",
+    "WELCOME": "Welcome to your learning journey"
+  },
+  "AUTH": {
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "FULL_NAME": "Full Name",
+    "REMEMBER_ME": "Remember me",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "DONT_HAVE_ACCOUNT": "Don't have an account?"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "WELCOME_BACK": "Welcome back",
+    "PROGRESS": "Progress",
+    "PENDING_HOMEWORK": "Pending Homework",
+    "CURRENT_LEVEL": "Current Level",
+    "UPCOMING_TASKS": "Upcoming Tasks",
+    "RECENT_ACTIVITY": "Recent Activity",
+    "QUICK_ACTIONS": "Quick Actions"
+  },
+  "ROADMAP": {
+    "TITLE": "Learning Roadmap",
+    "MODULES": "Modules",
+    "LESSONS": "Lessons",
+    "PROGRESS": "Progress",
+    "START_LESSON": "Start Lesson",
+    "CONTINUE_LESSON": "Continue Lesson",
+    "COMPLETED": "Completed",
+    "LOCKED": "Locked",
+    "AVAILABLE": "Available",
+    "IN_PROGRESS": "In Progress"
+  },
+  "HOMEWORK": {
+    "TITLE": "Homework",
+    "ASSIGNMENTS": "Assignments",
+    "DUE_DATE": "Due Date",
+    "STATUS": "Status",
+    "PENDING": "Pending",
+    "COMPLETED": "Completed",
+    "OVERDUE": "Overdue",
+    "SUBMIT": "Submit",
+    "VIEW_DETAILS": "View Details",
+    "DESCRIPTION": "Description",
+    "INSTRUCTOR_NOTES": "Instructor Notes"
+  },
+  "RESOURCES": {
+    "TITLE": "Resources",
+    "DOWNLOAD": "Download",
+    "PREVIEW": "Preview",
+    "CATEGORY": "Category",
+    "FILE_SIZE": "File Size",
+    "DOWNLOAD_COUNT": "Downloads"
+  },
+  "PROFILE": {
+    "TITLE": "Profile",
+    "PERSONAL_INFO": "Personal Information",
+    "EDIT_PROFILE": "Edit Profile",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "STATISTICS": "Learning Statistics",
+    "PROGRESS_PERCENTAGE": "Overall Progress",
+    "COMPLETED_LESSONS": "Completed Lessons",
+    "COMPLETED_HOMEWORK": "Completed Homework",
+    "LEARNING_DAYS": "Learning Days"
+  },
+  "COMMON": {
+    "LOADING": "Loading...",
+    "ERROR": "Error",
+    "SUCCESS": "Success",
+    "CANCEL": "Cancel",
+    "OK": "OK",
+    "YES": "Yes",
+    "NO": "No",
+    "SEARCH": "Search",
+    "FILTER": "Filter",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  }
+}

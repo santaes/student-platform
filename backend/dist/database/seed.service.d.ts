@@ -1,0 +1,31 @@
+import { Repository } from 'typeorm';
+import { User } from '../entities/user.entity';
+import { StudentProfile } from '../entities/student-profile.entity';
+import { Roadmap } from '../entities/roadmap.entity';
+import { Module } from '../entities/module.entity';
+import { Lesson } from '../entities/lesson.entity';
+import { LessonProgress } from '../entities/lesson-progress.entity';
+import { Homework } from '../entities/homework.entity';
+import { Resource } from '../entities/resource.entity';
+import { Submission } from '../entities/submission.entity';
+export declare class SeedService {
+    private userRepository;
+    private profileRepository;
+    private roadmapRepository;
+    private moduleRepository;
+    private lessonRepository;
+    private lessonProgressRepository;
+    private homeworkRepository;
+    private resourceRepository;
+    private submissionRepository;
+    constructor(userRepository: Repository<User>, profileRepository: Repository<StudentProfile>, roadmapRepository: Repository<Roadmap>, moduleRepository: Repository<Module>, lessonRepository: Repository<Lesson>, lessonProgressRepository: Repository<LessonProgress>, homeworkRepository: Repository<Homework>, resourceRepository: Repository<Resource>, submissionRepository: Repository<Submission>);
+    seed(): Promise<void>;
+    private clearDatabase;
+    private createUsers;
+    private createRoadmaps;
+    private createModulesAndLessons;
+    private createLessonProgress;
+    private createHomework;
+    private createResources;
+    private createSubmissions;
+}

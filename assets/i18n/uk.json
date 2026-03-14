@@ -1,0 +1,85 @@
+{
+  "HOME": {
+    "TITLE": "Навчальна Платформа",
+    "WELCOME": "Ласкаво просимо до вашої навчальної подорожі"
+  },
+  "AUTH": {
+    "LOGIN": "Увійти",
+    "REGISTER": "Зареєструватися",
+    "EMAIL": "Email",
+    "PASSWORD": "Пароль",
+    "FULL_NAME": "Повне ім'я",
+    "REMEMBER_ME": "Запам'ятати мене",
+    "FORGOT_PASSWORD": "Забули пароль?",
+    "ALREADY_HAVE_ACCOUNT": "Вже маєте акаунт?",
+    "DONT_HAVE_ACCOUNT": "Не маєте акаунту?"
+  },
+  "DASHBOARD": {
+    "TITLE": "Панель приладів",
+    "WELCOME_BACK": "Ласкаво просимо",
+    "PROGRESS": "Прогрес",
+    "PENDING_HOMEWORK": "Очікуючі завдання",
+    "CURRENT_LEVEL": "Поточний рівень",
+    "UPCOMING_TASKS": "Найближчі завдання",
+    "RECENT_ACTIVITY": "Остання активність",
+    "QUICK_ACTIONS": "Швидкі дії"
+  },
+  "ROADMAP": {
+    "TITLE": "Навчальний план",
+    "MODULES": "Модулі",
+    "LESSONS": "Уроки",
+    "PROGRESS": "Прогрес",
+    "START_LESSON": "Почати урок",
+    "CONTINUE_LESSON": "Продовжити урок",
+    "COMPLETED": "Завершено",
+    "LOCKED": "Заблоковано",
+    "AVAILABLE": "Доступно",
+    "IN_PROGRESS": "В процесі"
+  },
+  "HOMEWORK": {
+    "TITLE": "Домашні завдання",
+    "ASSIGNMENTS": "Завдання",
+    "DUE_DATE": "Термін здачі",
+    "STATUS": "Статус",
+    "PENDING": "Очікує",
+    "COMPLETED": "Завершено",
+    "OVERDUE": "Протерміновано",
+    "SUBMIT": "Надіслати",
+    "VIEW_DETAILS": "Переглянути деталі",
+    "DESCRIPTION": "Опис",
+    "INSTRUCTOR_NOTES": "Примітки викладача"
+  },
+  "RESOURCES": {
+    "TITLE": "Ресурси",
+    "DOWNLOAD": "Завантажити",
+    "PREVIEW": "Переглянути",
+    "CATEGORY": "Категорія",
+    "FILE_SIZE": "Розмір файлу",
+    "DOWNLOAD_COUNT": "Завантажень"
+  },
+  "PROFILE": {
+    "TITLE": "Профіль",
+    "PERSONAL_INFO": "Особиста інформація",
+    "EDIT_PROFILE": "Редагувати профіль",
+    "SAVE": "Зберегти",
+    "CANCEL": "Скасувати",
+    "STATISTICS": "Статистика навчання",
+    "PROGRESS_PERCENTAGE": "Загальний прогрес",
+    "COMPLETED_LESSONS": "Завершені уроки",
+    "COMPLETED_HOMEWORK": "Завершені завдання",
+    "LEARNING_DAYS": "Днів навчання"
+  },
+  "COMMON": {
+    "LOADING": "Завантаження...",
+    "ERROR": "Помилка",
+    "SUCCESS": "Успіх",
+    "CANCEL": "Скасувати",
+    "OK": "OK",
+    "YES": "Так",
+    "NO": "Ні",
+    "SEARCH": "Пошук",
+    "FILTER": "Фільтр",
+    "SETTINGS": "Налаштування",
+    "LOGOUT": "Вийти"
+  }
+}
