@@ -1,0 +1,15 @@
+services:
+  # Frontend Static Site
+  - type: web
+    name: student-learning-platform-frontend
+    rootDir: .
+    buildCommand: "npm run build:static"
+    staticPublishDir: dist/browser
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+    autoDeploy: true
