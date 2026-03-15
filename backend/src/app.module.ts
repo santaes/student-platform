@@ -16,18 +16,20 @@ import { HealthController } from './health/health.controller';
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'development' ? '.env' : '.env.production',
       ignoreEnvFile: process.env.NODE_ENV === 'production', // Ignore .env files in production, use system env vars
+      load: [], // Ensure we load from process.env
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const isDevelopment = configService.get('NODE_ENV') === 'development';
-        const databaseUrl = configService.get('DATABASE_URL');
-        const dbHost = configService.get('DB_HOST');
+        const databaseUrl = configService.get('DATABASE_URL') || process.env.DATABASE_URL;
+        const dbHost = configService.get('DB_HOST') || process.env.DB_HOST;
         
         console.log('🔍 Environment check:', {
-          NODE_ENV: configService.get('NODE_ENV'),
+          NODE_ENV: configService.get('NODE_ENV') || process.env.NODE_ENV,
           DATABASE_URL: databaseUrl ? 'SET' : 'NOT SET',
-          DB_HOST: dbHost || 'NOT SET'
+          DB_HOST: dbHost || 'NOT SET',
+          'All env vars': Object.keys(process.env).filter(key => key.includes('DB') || key.includes('DATABASE'))
         });
         
         // Use DATABASE_URL if provided (Render, Railway, etc.)
@@ -49,10 +51,10 @@ import { HealthController } from './health/health.controller';
           return {
             type: 'postgres',
             host: dbHost,
-            port: configService.get('DB_PORT', 5432),
-            username: configService.get('DB_USERNAME', 'postgres'),
-            password: configService.get('DB_PASSWORD', 'password'),
-            database: configService.get('DB_DATABASE', 'student_learning_platform'),
+            port: configService.get('DB_PORT', 5432) || parseInt(process.env.DB_PORT || '5432'),
+            username: configService.get('DB_USERNAME', 'postgres') || process.env.DB_USERNAME || 'postgres',
+            password: configService.get('DB_PASSWORD', 'password') || process.env.DB_PASSWORD || 'password',
+            database: configService.get('DB_DATABASE', 'student_learning_platform') || process.env.DB_DATABASE || 'student_learning_platform',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: false, // Don't auto-sync in production
             logging: false,
