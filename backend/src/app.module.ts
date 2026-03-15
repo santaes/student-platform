@@ -29,7 +29,9 @@ import { HealthController } from './health/health.controller';
           NODE_ENV: configService.get('NODE_ENV') || process.env.NODE_ENV,
           DATABASE_URL: databaseUrl ? 'SET' : 'NOT SET',
           DB_HOST: dbHost || 'NOT SET',
-          'All env vars': Object.keys(process.env).filter(key => key.includes('DB') || key.includes('DATABASE'))
+          'All env vars': Object.keys(process.env).filter(key => key.includes('DB') || key.includes('DATABASE')),
+          'Render env vars': Object.keys(process.env).filter(key => key.includes('RENDER') || key.includes('PG')),
+          'All env keys': Object.keys(process.env).slice(0, 10) // Show first 10 env vars
         });
         
         // Use DATABASE_URL if provided (Render, Railway, etc.)
@@ -59,6 +61,21 @@ import { HealthController } from './health/health.controller';
             synchronize: false, // Don't auto-sync in production
             logging: false,
             ssl: dbHost.includes('render.com') || dbHost.includes('r.jina.ai') ? { rejectUnauthorized: false } : false,
+          };
+        }
+        
+        // Fallback to SQLite in production if no database config is available
+        if (!databaseUrl && !dbHost) {
+          console.log('🗄️ No database configuration found, using SQLite file database as fallback');
+          return {
+            type: 'sqlite',
+            database: './data/app.db',
+            entities: [__dirname + '/**/*.entity{.ts,.js}'],
+            synchronize: true, // Allow sync for initial setup
+            logging: false,
+            driverOptions: {
+              enableWAL: true,
+            },
           };
         }
         

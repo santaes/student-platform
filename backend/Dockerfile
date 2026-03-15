@@ -14,6 +14,9 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Create data directory for SQLite
+RUN mkdir -p ./data
+
 # Build the application
 RUN npm run build
 
