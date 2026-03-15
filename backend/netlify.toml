@@ -1,0 +1,16 @@
+[functions]
+  directory = "functions"
+
+[build]
+  command = "cd .. && npm run build && cd backend && npm install && npm run build"
+  publish = "../dist/student-learning-platform/browser"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

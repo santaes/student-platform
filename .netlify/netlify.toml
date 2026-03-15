@@ -1,23 +1,27 @@
+redirectsOrigin = "config"
+functionsDirectory = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend\\netlify\\functions"
+functionsDirectoryOrigin = "config-v1"
 headers = []
-redirects = []
 
 [functions]
 
 [functions."*"]
 
 [[plugins]]
-origin = "default"
+origin = "config"
 package = "@netlify/angular-runtime"
 
 [plugins.inputs]
 
 [build]
 publish = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\dist\\student-learning-platform\\browser"
-publishOrigin = "inline"
-commandOrigin = "ui"
-command = "npm run build"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "npm run build && cd backend && npm install && npm run build"
+functions = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend\\netlify\\functions"
 
 [build.environment]
+NODE_VERSION = "20"
 
 [build.processing]
 
@@ -30,3 +34,27 @@ command = "npm run build"
 [build.processing.js]
 
 [build.services]
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/api"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

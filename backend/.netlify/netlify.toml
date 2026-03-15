@@ -1,0 +1,55 @@
+functionsDirectory = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend\\functions"
+functionsDirectoryOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+headers = []
+
+[build]
+publish = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend\\dist\\student-learning-platform\\browser"
+publishOrigin = "config"
+commandOrigin = "config"
+base = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend"
+command = "npm run build && cd backend && npm install && npm run build"
+functions = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\backend\\functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
