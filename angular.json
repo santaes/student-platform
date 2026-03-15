@@ -83,6 +83,13 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "static": {
+              "outputMode": "static",
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"

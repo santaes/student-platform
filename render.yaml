@@ -4,7 +4,6 @@ services:
     name: student-learning-platform-frontend
     rootDir: .
     buildCommand: "npm run build:static"
-    staticPublishDir: dist/browser
     routes:
       - type: rewrite
         source: "/*"

@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng build && ng run student-learning-platform:server",
-    "build:static": "ng build --configuration production --output-path=dist --base-href /",
+    "build:static": "ng build --configuration static --output-path=dist --base-href /",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:student-learning-platform": "node dist/student-learning-platform/server/server.mjs"
