@@ -14,7 +14,8 @@ import { HealthController } from './health/health.controller';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+      envFilePath: process.env.NODE_ENV === 'development' ? '.env' : '.env.production',
+      ignoreEnvFile: process.env.NODE_ENV === 'production', // Ignore .env files in production, use system env vars
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -22,6 +23,12 @@ import { HealthController } from './health/health.controller';
         const isDevelopment = configService.get('NODE_ENV') === 'development';
         const databaseUrl = configService.get('DATABASE_URL');
         const dbHost = configService.get('DB_HOST');
+        
+        console.log('🔍 Environment check:', {
+          NODE_ENV: configService.get('NODE_ENV'),
+          DATABASE_URL: databaseUrl ? 'SET' : 'NOT SET',
+          DB_HOST: dbHost || 'NOT SET'
+        });
         
         // Use DATABASE_URL if provided (Render, Railway, etc.)
         if (databaseUrl) {
@@ -32,6 +39,24 @@ import { HealthController } from './health/health.controller';
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: isDevelopment,
             logging: isDevelopment,
+            ssl: databaseUrl.includes('render.com') ? { rejectUnauthorized: false } : false,
+          };
+        }
+        
+        // Use individual database config if DATABASE_URL is not available
+        if (dbHost && !isDevelopment) {
+          console.log('🐘 Using PostgreSQL database with individual config');
+          return {
+            type: 'postgres',
+            host: dbHost,
+            port: configService.get('DB_PORT', 5432),
+            username: configService.get('DB_USERNAME', 'postgres'),
+            password: configService.get('DB_PASSWORD', 'password'),
+            database: configService.get('DB_DATABASE', 'student_learning_platform'),
+            entities: [__dirname + '/**/*.entity{.ts,.js}'],
+            synchronize: false, // Don't auto-sync in production
+            logging: false,
+            ssl: dbHost.includes('render.com') || dbHost.includes('r.jina.ai') ? { rejectUnauthorized: false } : false,
           };
         }
         
