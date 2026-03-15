@@ -19,9 +19,22 @@ import { SeedService } from './database/seed.service';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const isDevelopment = configService.get('NODE_ENV') === 'development';
+        const databaseUrl = configService.get('DATABASE_URL');
         const dbHost = configService.get('DB_HOST');
         
-        // Force SQLite for development when DB_HOST is localhost (meaning PostgreSQL is not available)
+        // Use DATABASE_URL if provided (Render, Railway, etc.)
+        if (databaseUrl) {
+          console.log('🐘 Using PostgreSQL database via DATABASE_URL');
+          return {
+            type: 'postgres',
+            url: databaseUrl,
+            entities: [__dirname + '/**/*.entity{.ts,.js}'],
+            synchronize: isDevelopment,
+            logging: isDevelopment,
+          };
+        }
+        
+        // Force SQLite for development when DB_HOST is localhost or empty
         if (isDevelopment && (dbHost === 'localhost' || !dbHost)) {
           console.log('🗄️  Using SQLite in-memory database for development');
           return {
@@ -30,16 +43,14 @@ import { SeedService } from './database/seed.service';
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true,
             logging: true,
-            // SQLite-specific configurations
             driverOptions: {
-              // Disable datetime('now') function for SQLite compatibility
               enableWAL: true,
             },
           };
         }
         
-        // Use PostgreSQL for production or when explicitly configured
-        console.log('🐘 Using PostgreSQL database');
+        // Use PostgreSQL for production with individual config
+        console.log('🐘 Using PostgreSQL database with individual config');
         return {
           type: 'postgres',
           host: dbHost,
