@@ -8,7 +8,12 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:4200',
+    origin: [
+      process.env.FRONTEND_URL || 'http://localhost:4200',
+      'https://student-platform-frontend-71i9.onrender.com',
+      /^https:\/\/student-platform-frontend-.*\.onrender\.com$/, // Allow any Render frontend subdomain
+      'https://platformmama.netlify.app' // Keep the original frontend URL
+    ],
     credentials: true,
   });
 
