@@ -1,14 +1,13 @@
 [build]
-  command = "npm run build && cd backend && npm install && npm run build"
+  command = "npm run build"
   publish = "dist/student-learning-platform/browser"
-  functions = "backend/netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api"
+  to = "https://your-backend-url.onrender.com/api/:splat"
   status = 200
 
 [[redirects]]

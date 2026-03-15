@@ -27,7 +27,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://your-backend-url.onrender.com'; // Will be updated after backend deployment
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
