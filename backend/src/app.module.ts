@@ -8,12 +8,13 @@ import { HomeworkModule } from './homework/homework.module';
 import { ResourcesModule } from './resources/resources.module';
 import { DatabaseModule } from './database/database.module';
 import { SeedService } from './database/seed.service';
+import { HealthController } from './health/health.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -72,7 +73,7 @@ import { SeedService } from './database/seed.service';
     HomeworkModule,
     ResourcesModule,
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [],
 })
 export class AppModule implements OnModuleInit {
