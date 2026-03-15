@@ -64,6 +64,11 @@ export class AuthService {
       throw new UnauthorizedException('User with this email already exists');
     }
 
+    // Validate password confirmation
+    if (registerDto.password !== registerDto.confirmPassword) {
+      throw new UnauthorizedException('Passwords do not match');
+    }
+
     const hashedPassword = await hash(registerDto.password, 10);
 
     const user = this.userRepository.create({
