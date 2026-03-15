@@ -27,7 +27,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://your-backend-url.onrender.com'; // Will be updated after backend deployment
+  private apiUrl = 'https://student-platform-jl4x.onrender.com'; // Updated to deployed backend URL
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
