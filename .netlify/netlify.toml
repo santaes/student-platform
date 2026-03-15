@@ -1,5 +1,5 @@
-redirectsOrigin = "config"
 headers = []
+redirects = []
 
 [functions]
 
@@ -13,12 +13,11 @@ package = "@netlify/angular-runtime"
 
 [build]
 publish = "C:\\Users\\oleks\\Desktop\\student-learning-platform\\dist\\student-learning-platform\\browser"
-publishOrigin = "config"
-commandOrigin = "config"
+publishOrigin = "inline"
+commandOrigin = "ui"
 command = "npm run build"
 
 [build.environment]
-NODE_VERSION = "20"
 
 [build.processing]
 
@@ -31,15 +30,3 @@ NODE_VERSION = "20"
 [build.processing.js]
 
 [build.services]
-
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200.0
-force = false
-
-[redirects.query]
-
-[redirects.conditions]
-
-[redirects.headers]
