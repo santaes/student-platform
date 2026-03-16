@@ -97,7 +97,151 @@ npm start
 
 ## API Documentation
 
-Once the backend is running, visit http://localhost:3000/api to view the interactive Swagger documentation.
+### 🌐 **Interactive Swagger UI**
+
+**Live Production API**: https://student-platform-jl4x.onrender.com/api
+
+**Local Development**: http://localhost:3000/api
+
+The Swagger UI provides interactive API documentation where you can:
+- **Test all endpoints** directly in your browser
+- **View request/response schemas**
+- **Try authentication flows**
+- **Explore API capabilities** without writing code
+
+### 🚀 **Quick Start with Swagger UI**
+
+#### **1. Access the Documentation**
+Visit: https://student-platform-jl4x.onrender.com/api
+
+#### **2. Test User Registration**
+1. Expand `POST /auth/register`
+2. Click "Try it out"
+3. Fill in the request body:
+```json
+{
+  "fullName": "John Doe",
+  "email": "john@example.com", 
+  "password": "password123"
+}
+```
+4. Click "Execute" → Should return `201 Created`
+
+#### **3. Test User Login**
+1. Expand `POST /auth/login`
+2. Click "Try it out"
+3. Fill in the request body:
+```json
+{
+  "email": "maria.garcia@example.com",
+  "password": "password123"
+}
+```
+4. Click "Execute" → Returns JWT token
+
+#### **4. Test Protected Endpoints**
+1. Copy the JWT token from login response
+2. Expand `GET /auth/profile`
+3. Click "Try it out"
+4. In the "Authorization" field, enter: `Bearer YOUR_JWT_TOKEN`
+5. Click "Execute" → Returns user profile
+
+### 📋 **Available Endpoints in Swagger**
+
+#### **Authentication Endpoints**
+- `POST /auth/login` - User authentication
+- `POST /auth/register` - User registration
+- `GET /auth/profile` - Get current user profile (requires JWT)
+
+#### **Learning Content Endpoints**
+- `GET /roadmap` - Get student's learning roadmap
+- `GET /homework` - Get homework assignments
+- `GET /resources` - Get learning resources
+
+#### **User Management Endpoints**
+- `GET /users/dashboard` - Get dashboard statistics
+- `GET /users/profile` - Get user profile details
+
+### 🎯 **Swagger UI Features**
+
+#### **Interactive Testing**
+- **Try it out** buttons for each endpoint
+- **Live parameter validation**
+- **Real-time request/response**
+- **Error message display**
+
+#### **Documentation**
+- **Endpoint descriptions** and purposes
+- **Request body schemas** with examples
+- **Response format documentation**
+- **Authentication requirements**
+
+#### **Development Tools**
+- **CORS testing** from browser
+- **Authentication flow testing**
+- **Error scenario testing**
+- **API exploration**
+
+### 🔧 **Using Swagger for Development**
+
+#### **For Frontend Developers**
+- Test API integration before coding
+- Understand exact request/response formats
+- Debug authentication issues
+- Validate API contracts
+
+#### **For QA Testing**
+- Manual API testing without tools
+- Regression testing
+- Error scenario validation
+- Performance testing baseline
+
+#### **For API Documentation**
+- Always up-to-date API specs
+- Interactive examples
+- Clear authentication flows
+- Complete endpoint coverage
+
+### 🚨 **Authentication in Swagger**
+
+#### **JWT Token Required**
+Most endpoints require authentication. To test protected endpoints:
+
+1. **First, login** to get a JWT token
+2. **Copy the token** from the login response
+3. **Add Authorization header**: `Bearer YOUR_JWT_TOKEN`
+4. **Execute the request**
+
+#### **Example Token Format**
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDAyMWI1Zi1iMDhhLTRkZTEtODZmYi0wMGI5Yzk1M2U1OWYiLCJlbWFpbCI6Im1hcmlhLmdhcmNpYUBleGFtcGxlLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzczNjIwMDg4LCJleHAiOjE3NzM3MDY0ODh9.KShme7Q2fYzjV1hleYam-tEMuNPqT1ygTpF5dwuXzNI
+```
+
+### 📱 **Mobile App Integration**
+
+Use Swagger UI to:
+- **Test mobile API calls**
+- **Validate request formats**
+- **Debug authentication**
+- **Understand response structures**
+
+### 🎉 **Benefits of Swagger UI**
+
+✅ **No coding required** for API testing
+✅ **Interactive exploration** of all endpoints
+✅ **Live documentation** always in sync
+✅ **Authentication testing** made easy
+✅ **Error handling** examples
+✅ **Request/response validation**
+✅ **Developer-friendly** interface
+
+### 🔗 **Quick Links**
+
+- **🌐 Live API**: https://student-platform-jl4x.onrender.com/api
+- **📱 Frontend**: https://student-platform-frontend-71i9.onrender.com
+- **🔧 Backend**: https://student-platform-jl4x.onrender.com
+
+**Start exploring the API now at the Swagger UI!** 🚀
 
 ### Main Endpoints
 
