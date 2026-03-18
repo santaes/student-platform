@@ -5,8 +5,36 @@ const swagger_1 = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const app_module_1 = require("./app.module");
 const path_1 = require("path");
+if (!globalThis.crypto?.randomUUID) {
+    globalThis.crypto = {
+        randomUUID: () => {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        },
+        subtle: undefined,
+        getRandomValues: undefined,
+    };
+}
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const httpAdapter = app.getHttpAdapter();
+    const instance = httpAdapter.getInstance();
+    instance.use((req, res, next) => {
+        console.log(`Middleware called for path: ${req.path}`);
+        if (req.path === '/' || req.path === '/health') {
+            console.log('Health middleware responding');
+            res.status(200).json({
+                status: 'ok',
+                timestamp: new Date().toISOString(),
+                uptime: process.uptime(),
+            });
+            return;
+        }
+        next();
+    });
     app.enableCors({
         origin: true,
         credentials: true,
@@ -17,17 +45,6 @@ async function bootstrap() {
         transform: true,
         forbidNonWhitelisted: true,
     }));
-    app.use((req, res, next) => {
-        if (req.path === '/' || req.path === '/health') {
-            res.status(200).json({
-                status: 'ok',
-                timestamp: new Date().toISOString(),
-                uptime: process.uptime(),
-            });
-            return;
-        }
-        next();
-    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Student Learning Platform API')
         .setDescription('API documentation for Student Learning Platform')

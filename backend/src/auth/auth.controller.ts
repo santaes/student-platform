@@ -31,4 +31,15 @@ export class AuthController {
   async getProfile(@Request() req) {
     return this.authService.getUserProfile(req.user.id);
   }
+
+  @Get('health')
+  @ApiOperation({ summary: 'Health check endpoint' })
+  @ApiResponse({ status: 200, description: 'Health check successful' })
+  async getHealth() {
+    return {
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+    };
+  }
 }

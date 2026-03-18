@@ -22,4 +22,9 @@ export declare class AuthController {
         };
     }>;
     getProfile(req: any): Promise<import("../entities/user.entity").User>;
+    getHealth(): Promise<{
+        status: string;
+        timestamp: string;
+        uptime: number;
+    }>;
 }

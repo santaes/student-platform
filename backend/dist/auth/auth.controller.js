@@ -31,6 +31,13 @@ let AuthController = class AuthController {
     async getProfile(req) {
         return this.authService.getUserProfile(req.user.id);
     }
+    async getHealth() {
+        return {
+            status: 'ok',
+            timestamp: new Date().toISOString(),
+            uptime: process.uptime(),
+        };
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -62,6 +69,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getProfile", null);
+__decorate([
+    (0, common_1.Get)('health'),
+    (0, swagger_1.ApiOperation)({ summary: 'Health check endpoint' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Health check successful' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getHealth", null);
 exports.AuthController = AuthController = __decorate([
     (0, swagger_1.ApiTags)('Authentication'),
     (0, common_1.Controller)('auth'),

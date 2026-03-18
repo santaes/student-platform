@@ -5,8 +5,40 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
+// Polyfill for crypto.randomUUID in case it's not available
+if (!(globalThis as any).crypto?.randomUUID) {
+  (globalThis as any).crypto = {
+    randomUUID: () => {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    },
+    subtle: undefined,
+    getRandomValues: undefined,
+  };
+}
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Add health check middleware using NestJS method
+  const httpAdapter = app.getHttpAdapter();
+  const instance = httpAdapter.getInstance();
+  instance.use((req, res, next) => {
+    console.log(`Middleware called for path: ${req.path}`);
+    if (req.path === '/' || req.path === '/health') {
+      console.log('Health middleware responding');
+      res.status(200).json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+      });
+      return;
+    }
+    next();
+  });
 
   // Enable CORS
   app.enableCors({
@@ -25,19 +57,6 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-
-  // Add health check middleware
-  app.use((req, res, next) => {
-    if (req.path === '/' || req.path === '/health') {
-      res.status(200).json({
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime(),
-      });
-      return;
-    }
-    next();
-  });
 
   // Swagger documentation
   const config = new DocumentBuilder()
