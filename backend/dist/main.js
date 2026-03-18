@@ -17,6 +17,17 @@ async function bootstrap() {
         transform: true,
         forbidNonWhitelisted: true,
     }));
+    app.use((req, res, next) => {
+        if (req.path === '/' || req.path === '/health') {
+            res.status(200).json({
+                status: 'ok',
+                timestamp: new Date().toISOString(),
+                uptime: process.uptime(),
+            });
+            return;
+        }
+        next();
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Student Learning Platform API')
         .setDescription('API documentation for Student Learning Platform')

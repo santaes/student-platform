@@ -26,6 +26,19 @@ async function bootstrap() {
     }),
   );
 
+  // Add health check middleware
+  app.use((req, res, next) => {
+    if (req.path === '/' || req.path === '/health') {
+      res.status(200).json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+      });
+      return;
+    }
+    next();
+  });
+
   // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('Student Learning Platform API')
