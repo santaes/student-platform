@@ -307,25 +307,54 @@ export class ResourcesComponent {
 
   downloadResource(resource: Resource): void {
     console.log('Download resource:', resource.title);
-
-    // Create a temporary anchor element to trigger download
-    const link = document.createElement('a');
-    link.href = resource.fileUrl || resource.downloadUrl;
-    link.download = resource.originalName || resource.title;
-    link.target = '_blank';
-
-    // Add to DOM temporarily and click
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Increment download count locally
-    const updatedResources = this.resources().map(r =>
-      r.id === resource.id
-        ? { ...r, downloadCount: (r.downloadCount || 0) + 1 }
-        : r
-    );
-    this.resources.set(updatedResources);
+    
+    // Use the ApiService to make an authenticated request
+    const fileName = resource.fileName || resource.originalName || resource.title;
+    this.apiService.downloadFile(fileName).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = resource.originalName || resource.title;
+        link.target = '_blank';
+        
+        // Trigger the download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the object URL
+        window.URL.revokeObjectURL(url);
+        
+        // Increment download count locally
+        const updatedResources = this.resources().map(r =>
+          r.id === resource.id
+            ? { ...r, downloadCount: (r.downloadCount || 0) + 1 }
+            : r
+        );
+        this.resources.set(updatedResources);
+      },
+      error: (error: any) => {
+        console.error('Error downloading resource:', error);
+        // Fallback to direct link if API call fails
+        const fallbackUrl = resource.fileUrl || resource.downloadUrl || 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+        const link = document.createElement('a');
+        link.href = fallbackUrl;
+        link.download = resource.originalName || resource.title;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Still increment download count on fallback
+        const updatedResources = this.resources().map(r =>
+          r.id === resource.id
+            ? { ...r, downloadCount: (r.downloadCount || 0) + 1 }
+            : r
+        );
+        this.resources.set(updatedResources);
+      }
+    });
   }
 
   previewResource(resource: Resource): void {

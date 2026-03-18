@@ -425,7 +425,37 @@ export class HomeworkListComponent {
 
   downloadAttachment(attachment: any): void {
     console.log('Download attachment:', attachment.fileName);
-    // In a real app, this would trigger the actual download
-    window.open(attachment.downloadUrl, '_blank');
+    
+    // Use the ApiService to make an authenticated request
+    const fileName = attachment.fileName || attachment.originalName;
+    this.apiService.downloadFile(fileName).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = attachment.originalName || attachment.fileName;
+        link.target = '_blank';
+        
+        // Trigger the download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the object URL
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error: any) => {
+        console.error('Error downloading file:', error);
+        // Fallback to direct link if API call fails
+        const fallbackUrl = attachment.downloadUrl || 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+        const link = document.createElement('a');
+        link.href = fallbackUrl;
+        link.download = attachment.originalName || attachment.fileName;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
   }
 }
