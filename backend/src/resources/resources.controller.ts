@@ -24,7 +24,8 @@ export class ResourcesController {
   @ApiResponse({ status: 200, description: 'File downloaded successfully' })
   async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
     try {
-      const filePath = join(process.cwd(), 'backend', 'public', 'resources', filename);
+      // Use the static assets path
+      const filePath = join(__dirname, '..', 'public', 'resources', filename);
       console.log('Attempting to download file:', filePath);
       
       // Check if file exists
