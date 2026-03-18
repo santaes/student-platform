@@ -36,17 +36,6 @@ app.use(
 );
 
 /**
- * Serve static files from backend public directory
- */
-app.use(
-  '/api/resources',
-  express.static(join(import.meta.dirname, 'backend/public/resources'), {
-    maxAge: '1y',
-    redirect: false,
-  }),
-);
-
-/**
  * Handle all other requests by rendering the Angular application.
  */
 app.use((req, res, next) => {

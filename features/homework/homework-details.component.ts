@@ -468,18 +468,35 @@ export class HomeworkDetailsComponent {
   downloadAttachment(attachment: any): void {
     console.log('Downloading attachment:', attachment.fileName);
     
-    // Create the download URL
-    const downloadUrl = `/api/resources/download/${attachment.fileName}`;
-    
-    // Create a temporary anchor element to trigger download
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = attachment.originalName || attachment.fileName;
-    link.target = '_blank';
-    
-    // Trigger the download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Use the ApiService to make an authenticated request
+    this.apiService.downloadFile(attachment.fileName).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = attachment.originalName || attachment.fileName;
+        link.target = '_blank';
+        
+        // Trigger the download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the object URL
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error: any) => {
+        console.error('Error downloading file:', error);
+        // Fallback to direct link if API call fails
+        const downloadUrl = `/api/resources/download/${attachment.fileName}`;
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = attachment.originalName || attachment.fileName;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
   }
 }

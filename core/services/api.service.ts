@@ -222,6 +222,22 @@ export class ApiService {
     );
   }
 
+  downloadFile(filename: string): Observable<Blob> {
+    return this.http.get(
+      `${this.apiUrl}/resources/download/${filename}`,
+      {
+        headers: this.httpOptions.headers.set('Authorization', `Bearer ${this.getToken()}`),
+        responseType: 'blob'
+      }
+    ).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Download file error:', error);
+        return throwError(() => 'Failed to download file');
+      })
+    );
+  }
+
   // Dashboard
   getDashboardStats(userId: string): Observable<DashboardStats> {
     return this.http.get<DashboardStats>(
