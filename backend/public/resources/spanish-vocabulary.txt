@@ -1,0 +1,177 @@
+# Spanish Vocabulary Builder
+
+## Family & Relationships
+- **Madre** - Mother
+- **Padre** - Father
+- **Hermano** - Brother
+- **Hermana** - Sister
+- **Abuelo** - Grandfather
+- **Abuela** - Grandmother
+- **Hijo** - Son
+- **Hija** - Daughter
+- **Esposo** - Husband
+- **Esposa** - Wife
+- **Amigo** - Friend (male)
+- **Amiga** - Friend (female)
+
+## Food & Drinks
+- **Agua** - Water
+- **Leche** - Milk
+- **Pan** - Bread
+- **Arroz** - Rice
+- **Carne** - Meat
+- **Pescado** - Fish
+- **Pollo** - Chicken
+- **Fruta** - Fruit
+- **Verduras** - Vegetables
+- **Café** - Coffee
+- **Té** - Tea
+- **Vino** - Wine
+- **Cerveza** - Beer
+
+## Colors
+- **Rojo** - Red
+- **Azul** - Blue
+- **Verde** - Green
+- **Amarillo** - Yellow
+- **Negro** - Black
+- **Blanco** - White
+- **Naranja** - Orange
+- **Morado/Púrpura** - Purple
+- **Rosa** - Pink
+- **Gris** - Gray
+- **Marrón** - Brown
+
+## Animals
+- **Perro** - Dog
+- **Gato** - Cat
+- **Caballo** - Horse
+- **Vaca** - Cow
+- **Pájaro** - Bird
+- **Pez** - Fish
+- **León** - Lion
+- **Tigre** - Tiger
+- **Elefante** - Elephant
+- **Mono** - Monkey
+
+## Places & Locations
+- **Casa** - House
+- **Escuela** - School
+- **Trabajo** - Work
+- **Hospital** - Hospital
+- **Tienda** - Store
+- **Restaurante** - Restaurant
+- **Parque** - Park
+- **Playa** - Beach
+- **Ciudad** - City
+- **País** - Country
+- **Biblioteca** - Library
+- **Museo** - Museum
+
+## Weather & Nature
+- **Sol** - Sun
+- **Luna** - Moon
+- **Estrella** - Star
+- **Nube** - Cloud
+- **Lluvia** - Rain
+- **Nieve** - Snow
+- **Viento** - Wind
+- **Calor** - Heat
+- **Frío** - Cold
+- **Montaña** - Mountain
+- **Río** - River
+- **Mar** - Sea
+
+## Time & Calendar
+- **Día** - Day
+- **Noche** - Night
+- **Mañana** - Morning/Tomorrow
+- **Tarde** - Afternoon
+- **Noche** - Evening/Night
+- **Hoy** - Today
+- **Ayer** - Yesterday
+- **Semana** - Week
+- **Mes** - Month
+- **Año** - Year
+- **Hora** - Hour
+- **Minuto** - Minute
+
+## Transportation
+- **Coche** - Car
+- **Autobús** - Bus
+- **Tren** - Train
+- **Avión** - Airplane
+- **Barco** - Boat
+- **Bicicleta** - Bicycle
+- **Moto** - Motorcycle
+- **Metro/Subterráneo** - Subway
+- **Taxi** - Taxi
+
+## Clothing
+- **Camisa** - Shirt
+- **Pantalones** - Pants
+- **Falda** - Skirt
+- **Vestido** - Dress
+- **Zapatos** - Shoes
+- **Sombrero** - Hat
+- **Chaqueta** - Jacket
+- **Bufanda** - Scarf
+- **Guantes** - Gloves
+
+## Body Parts
+- **Cabeza** - Head
+- **Ojos** - Eyes
+- **Nariz** - Nose
+- **Boca** - Mouth
+- **Orejas** - Ears
+- **Cuello** - Neck
+- **Brazos** - Arms
+- **Manos** - Hands
+- **Piernas** - Legs
+- **Pies** - Feet
+- **Cabello/Pelo** - Hair
+
+## Study & Learning
+- **Libro** - Book
+- **Cuaderno** - Notebook
+- **Bolígrafo** - Pen
+- **Lápiz** - Pencil
+- **Profesor** - Teacher
+- **Estudiante** - Student
+- **Clase** - Class
+- **Examen** - Exam
+- **Tarea** - Homework
+- **Universidad** - University
+
+## Emotions & Feelings
+- **Feliz** - Happy
+- **Triste** - Sad
+- **Enojado** - Angry
+- **Cansado** - Tired
+- **Emocionado** - Excited
+- **Nervioso** - Nervous
+- **Contento** - Pleased/Content
+- **Preocupado** - Worried
+- **Surprendido** - Surprised
+
+## Technology
+- **Teléfono** - Telephone
+- **Computadora** - Computer
+- **Internet** - Internet
+- **Correo electrónico** - Email
+- **Teléfono móvil** - Mobile phone
+- **Televisión** - Television
+- **Radio** - Radio
+
+## Practice Tips
+1. Learn 10-15 words per day
+2. Use flashcards for memorization
+3. Practice words in sentences
+4. Label objects around your home
+5. Play vocabulary games
+6. Review words regularly
+7. Connect words to images
+8. Use words in conversation
+
+---
+*Build your Spanish vocabulary step by step with these essential word lists!*
