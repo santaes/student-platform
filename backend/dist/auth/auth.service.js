@@ -64,6 +64,9 @@ let AuthService = class AuthService {
         if (existingUser) {
             throw new common_1.UnauthorizedException('User with this email already exists');
         }
+        if (registerDto.password !== registerDto.confirmPassword) {
+            throw new common_1.UnauthorizedException('Passwords do not match');
+        }
         const hashedPassword = await (0, bcrypt_1.hash)(registerDto.password, 10);
         const user = this.userRepository.create({
             email: registerDto.email,
