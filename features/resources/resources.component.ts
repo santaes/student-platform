@@ -309,7 +309,7 @@ export class ResourcesComponent {
     console.log('Download resource:', resource.title);
     
     // Use the ApiService to make an authenticated request
-    const fileName = resource.fileName || resource.originalName || resource.title;
+    const fileName = resource.fileName || resource.originalName || resource.title || 'unknown-file';
     this.apiService.downloadFile(fileName).subscribe({
       next: (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);

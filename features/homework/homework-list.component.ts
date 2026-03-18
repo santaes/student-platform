@@ -427,7 +427,7 @@ export class HomeworkListComponent {
     console.log('Download attachment:', attachment.fileName);
     
     // Use the ApiService to make an authenticated request
-    const fileName = attachment.fileName || attachment.originalName;
+    const fileName = attachment.fileName || attachment.originalName || 'unknown-file';
     this.apiService.downloadFile(fileName).subscribe({
       next: (blob: Blob) => {
         const url = window.URL.createObjectURL(blob);
