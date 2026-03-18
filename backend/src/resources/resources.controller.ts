@@ -1,7 +1,9 @@
-import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, UseGuards, Res } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { ResourcesService } from './resources.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { join } from 'path';
+import { Response } from 'express';
 
 @ApiTags('Resources')
 @Controller('resources')
@@ -29,5 +31,13 @@ export class ResourcesController {
   @ApiResponse({ status: 201, description: 'Resource created successfully' })
   async createResource(@Body() createResourceDto: any) {
     return this.resourcesService.createResource(createResourceDto);
+  }
+
+  @Get('download/:filename')
+  @ApiOperation({ summary: 'Download file by filename' })
+  @ApiResponse({ status: 200, description: 'File downloaded successfully' })
+  async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
+    const filePath = join(process.cwd(), 'public', 'resources', filename);
+    return res.download(filePath, filename);
   }
 }

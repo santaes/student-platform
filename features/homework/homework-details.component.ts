@@ -440,7 +440,7 @@ export class HomeworkDetailsComponent {
             originalName: 'Дієслова система української мови.pdf',
             fileType: 'pdf',
             fileSize: 2048576,
-            downloadUrl: '/api/resources/ukrainian-verbs.pdf'
+            downloadUrl: '/api/resources/download/ukrainian-verbs.pdf'
           }
         ],
         submission: undefined,
@@ -467,6 +467,19 @@ export class HomeworkDetailsComponent {
 
   downloadAttachment(attachment: any): void {
     console.log('Downloading attachment:', attachment.fileName);
-    // In a real app, this would trigger the file download
+    
+    // Create the download URL
+    const downloadUrl = `/api/resources/download/${attachment.fileName}`;
+    
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = attachment.originalName || attachment.fileName;
+    link.target = '_blank';
+    
+    // Trigger the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
