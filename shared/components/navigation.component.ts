@@ -60,7 +60,14 @@ import { User, NavigationItem } from '../models/index';
           </a>
           
           <a mat-list-item 
-             routerLink="/dashboard/homework" 
+             routerLink="/dashboard/chat" 
+             routerLinkActive="active"
+             (click)="isMobile() && sidenav.toggle()">
+            <mat-icon matListItemIcon>chat</mat-icon>
+            <span matListItemTitle>Чат</span>
+          </a>
+          
+          <a mat-list-item 
              routerLinkActive="active"
              (click)="isMobile() && sidenav.toggle()">
             <mat-icon matListItemIcon>assignment</mat-icon>

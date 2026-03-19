@@ -21,6 +21,7 @@ const resources_module_1 = require("./resources/resources.module");
 const database_module_1 = require("./database/database.module");
 const seed_service_1 = require("./database/seed.service");
 const health_controller_1 = require("./health/health.controller");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
     constructor(seedService) {
         this.seedService = seedService;
@@ -131,6 +132,7 @@ exports.AppModule = AppModule = __decorate([
             roadmap_module_1.RoadmapModule,
             homework_module_1.HomeworkModule,
             resources_module_1.ResourcesModule,
+            chat_module_1.ChatModule,
         ],
         controllers: [health_controller_1.HealthController],
         providers: [],

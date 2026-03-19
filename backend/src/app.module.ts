@@ -9,6 +9,7 @@ import { ResourcesModule } from './resources/resources.module';
 import { DatabaseModule } from './database/database.module';
 import { SeedService } from './database/seed.service';
 import { HealthController } from './health/health.controller';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -116,6 +117,7 @@ import { HealthController } from './health/health.controller';
     RoadmapModule,
     HomeworkModule,
     ResourcesModule,
+    ChatModule,
   ],
   controllers: [HealthController],
   providers: [],
