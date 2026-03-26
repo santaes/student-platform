@@ -14,8 +14,8 @@ import { Lesson } from './lesson.entity';
 @Entity('modules')
 export class Module {
   @ApiProperty({ description: 'Module ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Module title' })
   @Column()

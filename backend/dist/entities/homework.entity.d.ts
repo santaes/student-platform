@@ -8,7 +8,7 @@ export declare enum HomeworkStatus {
     GRADED = "graded"
 }
 export declare class Homework {
-    id: string;
+    id: number;
     title: string;
     description: string;
     dueDate: Date;

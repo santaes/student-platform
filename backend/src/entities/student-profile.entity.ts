@@ -13,8 +13,8 @@ import { User } from './user.entity';
 @Entity('student_profiles')
 export class StudentProfile {
   @ApiProperty({ description: 'Student profile ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Full name' })
   @Column()

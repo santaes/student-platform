@@ -22,8 +22,8 @@ export enum UserRole {
 @Entity('users')
 export class User {
   @ApiProperty({ description: 'User ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'User email' })
   @Column({ unique: true })

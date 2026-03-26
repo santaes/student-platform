@@ -16,8 +16,8 @@ import { LessonStatus } from './lesson.entity';
 @Unique(['student', 'lesson'])
 export class LessonProgress {
   @ApiProperty({ description: 'Progress ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Progress status', enum: LessonStatus })
   @Column({

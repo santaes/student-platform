@@ -1,6 +1,6 @@
 import { Module } from './module.entity';
 export declare class Roadmap {
-    id: string;
+    id: number;
     title: string;
     description: string;
     isActive: boolean;

@@ -21,8 +21,8 @@ export enum SubmissionStatus {
 @Unique(['student', 'homework'])
 export class Submission {
   @ApiProperty({ description: 'Submission ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Text response' })
   @Column('text', { nullable: true })

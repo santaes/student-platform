@@ -12,8 +12,8 @@ import { Module } from './module.entity';
 @Entity('roadmaps')
 export class Roadmap {
   @ApiProperty({ description: 'Roadmap ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Roadmap title' })
   @Column()

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
 import {
   User,
   StudentProfile,
@@ -27,7 +28,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://student-platform-jl4x.onrender.com'; // Updated to deployed backend URL
+  private apiUrl = environment.apiUrl;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

@@ -47,7 +47,7 @@ export class ResourcesController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get resource by ID' })
   @ApiResponse({ status: 200, description: 'Resource retrieved successfully' })
-  async getResourceById(@Param('id') id: string) {
+  async getResourceById(@Param('id') id: number) {
     return this.resourcesService.getResourceById(id);
   }
 

@@ -6,7 +6,7 @@ export declare class AuthController {
     login(loginDto: LoginDto): Promise<{
         access_token: string;
         user: {
-            id: string;
+            id: number;
             email: string;
             role: import("../entities/user.entity").UserRole;
             studentProfile: import("../entities/student-profile.entity").StudentProfile;
@@ -15,7 +15,7 @@ export declare class AuthController {
     register(registerDto: RegisterDto): Promise<{
         access_token: string;
         user: {
-            id: string;
+            id: number;
             email: string;
             role: import("../entities/user.entity").UserRole;
             studentProfile: import("../entities/student-profile.entity").StudentProfile;

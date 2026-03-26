@@ -1,6 +1,6 @@
 import { Homework } from './homework.entity';
 export declare class HomeworkAttachment {
-    id: string;
+    id: number;
     fileName: string;
     originalName: string;
     mimeType: string;

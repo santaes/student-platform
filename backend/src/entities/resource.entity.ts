@@ -10,8 +10,8 @@ import { ApiProperty } from '@nestjs/swagger';
 @Entity('resources')
 export class Resource {
   @ApiProperty({ description: 'Resource ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Resource title' })
   @Column()

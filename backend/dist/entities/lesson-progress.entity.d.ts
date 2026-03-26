@@ -2,7 +2,7 @@ import { User } from './user.entity';
 import { Lesson } from './lesson.entity';
 import { LessonStatus } from './lesson.entity';
 export declare class LessonProgress {
-    id: string;
+    id: number;
     status: LessonStatus;
     progressPercentage: number;
     timeSpentMinutes: number;

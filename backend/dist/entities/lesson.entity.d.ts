@@ -8,7 +8,7 @@ export declare enum LessonStatus {
     COMPLETED = "completed"
 }
 export declare class Lesson {
-    id: string;
+    id: number;
     title: string;
     description: string;
     content: string;

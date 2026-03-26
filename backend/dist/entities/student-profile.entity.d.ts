@@ -1,6 +1,6 @@
 import { User } from './user.entity';
 export declare class StudentProfile {
-    id: string;
+    id: number;
     fullName: string;
     enrolledProgram: string;
     currentLevel: number;

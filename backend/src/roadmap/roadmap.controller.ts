@@ -21,21 +21,21 @@ export class RoadmapController {
   @Get('modules/:roadmapId')
   @ApiOperation({ summary: 'Get roadmap modules' })
   @ApiResponse({ status: 200, description: 'Modules retrieved successfully' })
-  async getModules(@Param('roadmapId') roadmapId: string) {
+  async getModules(@Param('roadmapId') roadmapId: number) {
     return this.roadmapService.getModules(roadmapId);
   }
 
   @Get('lessons/:moduleId')
   @ApiOperation({ summary: 'Get module lessons' })
   @ApiResponse({ status: 200, description: 'Lessons retrieved successfully' })
-  async getLessons(@Param('moduleId') moduleId: string) {
+  async getLessons(@Param('moduleId') moduleId: number) {
     return this.roadmapService.getLessons(moduleId);
   }
 
   @Get('lesson/:lessonId')
   @ApiOperation({ summary: 'Get lesson details' })
   @ApiResponse({ status: 200, description: 'Lesson details retrieved successfully' })
-  async getLessonDetails(@Param('lessonId') lessonId: string) {
+  async getLessonDetails(@Param('lessonId') lessonId: number) {
     return this.roadmapService.getLessonDetails(lessonId);
   }
 
@@ -43,7 +43,7 @@ export class RoadmapController {
   @ApiOperation({ summary: 'Update lesson progress' })
   @ApiResponse({ status: 200, description: 'Lesson progress updated successfully' })
   async updateProgress(
-    @Param('lessonId') lessonId: string,
+    @Param('lessonId') lessonId: number,
     @Body() updateProgressDto: UpdateProgressDto,
     @Request() req
   ) {

@@ -3,8 +3,8 @@ import { User } from './user.entity';
 
 @Entity('messages')
 export class Message {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column('text')
   content: string;
@@ -14,14 +14,14 @@ export class Message {
   sender: User;
 
   @Column()
-  senderId: string;
+  senderId: number;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'receiverId' })
   receiver: User;
 
   @Column()
-  receiverId: string;
+  receiverId: number;
 
   @CreateDateColumn()
   createdAt: Date;

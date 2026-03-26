@@ -14,14 +14,14 @@ export class UsersService {
     private profileRepository: Repository<StudentProfile>,
   ) {}
 
-  async getProfile(userId: string): Promise<User> {
+  async getProfile(userId: number): Promise<User> {
     return this.userRepository.findOne({
       where: { id: userId, isActive: true },
       relations: ['studentProfile'],
     });
   }
 
-  async updateProfile(userId: string, updateProfileDto: UpdateProfileDto): Promise<StudentProfile> {
+  async updateProfile(userId: number, updateProfileDto: UpdateProfileDto): Promise<StudentProfile> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['studentProfile'],
@@ -44,7 +44,7 @@ export class UsersService {
     }
   }
 
-  async getDashboardStats(userId: string) {
+  async getDashboardStats(userId: number) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['studentProfile', 'lessonProgress', 'submissions'],

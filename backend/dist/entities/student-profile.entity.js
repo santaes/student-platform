@@ -18,8 +18,8 @@ let StudentProfile = class StudentProfile {
 exports.StudentProfile = StudentProfile;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Student profile ID' }),
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
-    __metadata("design:type", String)
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
 ], StudentProfile.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Full name' }),

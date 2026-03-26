@@ -41,6 +41,10 @@ export const routes: Routes = [
         loadComponent: () => import('../features/dashboard/dashboard-home.component').then(m => m.DashboardHomeComponent)
       },
       {
+        path: 'chat',
+        loadComponent: () => import('../features/chat/chat.component').then(m => m.ChatComponent)
+      },
+      {
         path: 'roadmap',
         loadComponent: () => import('../features/roadmap/roadmap.component').then(m => m.RoadmapComponent)
       },
@@ -59,10 +63,6 @@ export const routes: Routes = [
       {
         path: 'profile',
         loadComponent: () => import('../features/profile/profile.component').then(m => m.ProfileComponent)
-      },
-      {
-        path: 'chat',
-        loadComponent: () => import('../features/chat/chat.component').then(m => m.ChatComponent)
       }
     ]
   },

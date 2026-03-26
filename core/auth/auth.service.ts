@@ -15,25 +15,59 @@ export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+  
+  private authChecked = false;
+  private isBrowser: boolean;
 
   private apiService = inject(ApiService);
   private platformId = inject(PLATFORM_ID);
 
   constructor() {
+    this.isBrowser = isPlatformBrowser(this.platformId);
     this.checkAuthStatus();
   }
 
   private checkAuthStatus(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('authToken');
-      const user = localStorage.getItem('currentUser');
+    if (this.isBrowser) {
+      try {
+        const token = localStorage.getItem('authToken');
+        const user = localStorage.getItem('currentUser');
 
-      if (token && user) {
-        const userObj = JSON.parse(user);
-        this.currentUserSubject.next(userObj);
-        this.isAuthenticatedSubject.next(true);
+        if (token && user) {
+          try {
+            const userObj = JSON.parse(user);
+            // Update BehaviorSubjects to match localStorage
+            this.currentUserSubject.next(userObj);
+            this.isAuthenticatedSubject.next(true);
+          } catch (error) {
+            console.error('Error parsing user data:', error);
+            this.clearAuthData();
+          }
+        } else {
+          // Ensure BehaviorSubjects match localStorage (both empty)
+          this.currentUserSubject.next(null);
+          this.isAuthenticatedSubject.next(false);
+        }
+      } catch (error) {
+        console.error('Error accessing localStorage:', error);
+        this.currentUserSubject.next(null);
+        this.isAuthenticatedSubject.next(false);
       }
     }
+    this.authChecked = true;
+  }
+
+  private clearAuthData(): void {
+    if (this.isBrowser) {
+      try {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+      } catch (error) {
+        console.error('Error clearing localStorage:', error);
+      }
+    }
+    this.currentUserSubject.next(null);
+    this.isAuthenticatedSubject.next(false);
   }
 
   login(email: string, password: string): Observable<any> {
@@ -41,9 +75,13 @@ export class AuthService {
       tap(response => {
         if (response.success) {
           // Save token and user data to localStorage
-          if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('authToken', response.data.access_token);
-            localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+          if (this.isBrowser) {
+            try {
+              localStorage.setItem('authToken', response.data.access_token);
+              localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+            } catch (error) {
+              console.error('Error saving to localStorage:', error);
+            }
           }
           this.currentUserSubject.next(response.data.user);
           this.isAuthenticatedSubject.next(true);
@@ -57,9 +95,13 @@ export class AuthService {
       tap(response => {
         if (response.success) {
           // Save token and user data to localStorage
-          if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('authToken', response.data.access_token);
-            localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+          if (this.isBrowser) {
+            try {
+              localStorage.setItem('authToken', response.data.access_token);
+              localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+            } catch (error) {
+              console.error('Error saving to localStorage:', error);
+            }
           }
           this.currentUserSubject.next(response.data.user);
           this.isAuthenticatedSubject.next(true);
@@ -75,16 +117,53 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+    // First check the BehaviorSubject, if not set, try localStorage
+    if (this.currentUserSubject.value) {
+      return this.currentUserSubject.value;
+    }
+    
+    if (this.isBrowser) {
+      try {
+        const user = localStorage.getItem('currentUser');
+        if (user) {
+          return JSON.parse(user);
+        }
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        return null;
+      }
+    }
+    
+    return null;
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticatedSubject.value;
+    // Direct localStorage check for immediate result
+    if (this.isBrowser) {
+      try {
+        const token = localStorage.getItem('authToken');
+        const user = localStorage.getItem('currentUser');
+        return !!(token && user);
+      } catch (error) {
+        console.error('Error checking localStorage:', error);
+        return false;
+      }
+    }
+    return false;
+  }
+
+  isAuthChecked(): boolean {
+    return this.authChecked;
   }
 
   getToken(): string | null {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('authToken');
+    if (this.isBrowser) {
+      try {
+        return localStorage.getItem('authToken');
+      } catch (error) {
+        console.error('Error getting token from localStorage:', error);
+        return null;
+      }
     }
     return null;
   }

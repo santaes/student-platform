@@ -20,8 +20,8 @@ let LessonProgress = class LessonProgress {
 exports.LessonProgress = LessonProgress;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Progress ID' }),
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
-    __metadata("design:type", String)
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
 ], LessonProgress.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Progress status', enum: lesson_entity_2.LessonStatus }),

@@ -1,7 +1,7 @@
 import { Roadmap } from './roadmap.entity';
 import { Lesson } from './lesson.entity';
 export declare class Module {
-    id: string;
+    id: number;
     title: string;
     description: string;
     order: number;

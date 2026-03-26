@@ -53,7 +53,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Homework details retrieved successfully' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], HomeworkController.prototype, "getHomeworkById", null);
 __decorate([
@@ -64,7 +64,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, submit_homework_dto_1.SubmitHomeworkDto, Object]),
+    __metadata("design:paramtypes", [Number, submit_homework_dto_1.SubmitHomeworkDto, Object]),
     __metadata("design:returntype", Promise)
 ], HomeworkController.prototype, "submitHomework", null);
 __decorate([
@@ -74,7 +74,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], HomeworkController.prototype, "markAsCompleted", null);
 exports.HomeworkController = HomeworkController = __decorate([

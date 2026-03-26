@@ -1,5 +1,5 @@
 export declare class Resource {
-    id: string;
+    id: number;
     title: string;
     description: string;
     category: string;

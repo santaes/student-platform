@@ -11,8 +11,8 @@ import { Homework } from './homework.entity';
 @Entity('homework_attachments')
 export class HomeworkAttachment {
   @ApiProperty({ description: 'Attachment ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'File name' })
   @Column()

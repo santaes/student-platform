@@ -111,7 +111,7 @@ export class AuthService {
     };
   }
 
-  async getUserProfile(userId: string): Promise<User> {
+  async getUserProfile(userId: number): Promise<User> {
     return this.userRepository.findOne({
       where: { id: userId, isActive: true },
       relations: ['studentProfile'],

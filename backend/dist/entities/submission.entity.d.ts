@@ -6,7 +6,7 @@ export declare enum SubmissionStatus {
     RETURNED = "returned"
 }
 export declare class Submission {
-    id: string;
+    id: number;
     textResponse: string;
     score: number;
     status: SubmissionStatus;

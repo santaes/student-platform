@@ -17,7 +17,7 @@ export class ResourcesService {
     });
   }
 
-  async getResourceById(id: string): Promise<Resource> {
+  async getResourceById(id: number): Promise<Resource> {
     const resource = await this.resourceRepository.findOne({
       where: { id: id, isActive: true },
     });

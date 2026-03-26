@@ -10,9 +10,9 @@ export declare class RoadmapService {
     private lessonRepository;
     private lessonProgressRepository;
     constructor(roadmapRepository: Repository<Roadmap>, moduleRepository: Repository<Module>, lessonRepository: Repository<Lesson>, lessonProgressRepository: Repository<LessonProgress>);
-    getRoadmap(userId: string): Promise<Roadmap>;
-    getModules(roadmapId: string): Promise<Module[]>;
-    getLessons(moduleId: string): Promise<Lesson[]>;
-    getLessonDetails(lessonId: string): Promise<Lesson>;
-    updateLessonProgress(userId: string, lessonId: string, status: LessonStatus, progressPercentage: number): Promise<LessonProgress>;
+    getRoadmap(userId: number): Promise<Roadmap>;
+    getModules(roadmapId: number): Promise<Module[]>;
+    getLessons(moduleId: number): Promise<Lesson[]>;
+    getLessonDetails(lessonId: number): Promise<Lesson>;
+    updateLessonProgress(userId: number, lessonId: number, status: LessonStatus, progressPercentage: number): Promise<LessonProgress>;
 }

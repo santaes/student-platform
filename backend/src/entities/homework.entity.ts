@@ -22,8 +22,8 @@ export enum HomeworkStatus {
 @Entity('homework')
 export class Homework {
   @ApiProperty({ description: 'Homework ID' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({ description: 'Homework title' })
   @Column()

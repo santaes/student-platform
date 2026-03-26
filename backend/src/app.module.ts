@@ -72,7 +72,7 @@ import { ChatModule } from './chat/chat.module';
             type: 'sqlite',
             database: './data/app.db',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true, // Allow sync for initial setup
+            synchronize: true, // Re-enable sync for testing
             logging: false,
             driverOptions: {
               enableWAL: true,
@@ -87,8 +87,8 @@ import { ChatModule } from './chat/chat.module';
             type: 'sqlite',
             database: ':memory:',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true,
-            logging: true,
+            synchronize: false, // Disable sync to avoid schema issues
+            logging: false,
             driverOptions: {
               enableWAL: true,
             },
@@ -127,7 +127,8 @@ export class AppModule implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      await this.seedService.seed();
+      // await this.seedService.seed();
+      console.log('Database seeding temporarily disabled');
     } catch (error) {
       console.log('Database seeding skipped (might already be seeded):', error.message);
     }

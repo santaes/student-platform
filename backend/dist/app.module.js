@@ -28,7 +28,7 @@ let AppModule = class AppModule {
     }
     async onModuleInit() {
         try {
-            await this.seedService.seed();
+            console.log('Database seeding temporarily disabled');
         }
         catch (error) {
             console.log('Database seeding skipped (might already be seeded):', error.message);
@@ -104,8 +104,8 @@ exports.AppModule = AppModule = __decorate([
                             type: 'sqlite',
                             database: ':memory:',
                             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-                            synchronize: true,
-                            logging: true,
+                            synchronize: false,
+                            logging: false,
                             driverOptions: {
                                 enableWAL: true,
                             },

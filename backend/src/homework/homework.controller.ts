@@ -25,7 +25,7 @@ export class HomeworkController {
   @Get(':id')
   @ApiOperation({ summary: 'Get homework details' })
   @ApiResponse({ status: 200, description: 'Homework details retrieved successfully' })
-  async getHomeworkById(@Param('id') id: string) {
+  async getHomeworkById(@Param('id') id: number) {
     return this.homeworkService.getHomeworkById(id);
   }
 
@@ -33,7 +33,7 @@ export class HomeworkController {
   @ApiOperation({ summary: 'Submit homework' })
   @ApiResponse({ status: 201, description: 'Homework submitted successfully' })
   async submitHomework(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() submitHomeworkDto: SubmitHomeworkDto,
     @Request() req
   ) {
@@ -43,7 +43,7 @@ export class HomeworkController {
   @Post(':id/complete')
   @ApiOperation({ summary: 'Mark homework as completed' })
   @ApiResponse({ status: 200, description: 'Homework marked as completed' })
-  async markAsCompleted(@Param('id') id: string, @Request() req) {
+  async markAsCompleted(@Param('id') id: number, @Request() req) {
     return this.homeworkService.markHomeworkCompleted(req.user.id, id);
   }
 }

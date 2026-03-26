@@ -12,9 +12,9 @@ export declare class HomeworkService {
     private submissionRepository;
     private userRepository;
     constructor(homeworkRepository: Repository<Homework>, attachmentRepository: Repository<HomeworkAttachment>, submissionRepository: Repository<Submission>, userRepository: Repository<User>);
-    getHomework(userId: string, status?: HomeworkStatus): Promise<Homework[]>;
-    getHomeworkById(homeworkId: string): Promise<Homework>;
+    getHomework(userId: number, status?: HomeworkStatus): Promise<Homework[]>;
+    getHomeworkById(homeworkId: number): Promise<Homework>;
     createHomework(createHomeworkDto: CreateHomeworkDto): Promise<Homework>;
-    submitHomework(userId: string, homeworkId: string, submitHomeworkDto: SubmitHomeworkDto): Promise<Submission>;
-    markHomeworkCompleted(userId: string, homeworkId: string): Promise<Homework>;
+    submitHomework(userId: number, homeworkId: number, submitHomeworkDto: SubmitHomeworkDto): Promise<Submission>;
+    markHomeworkCompleted(userId: number, homeworkId: number): Promise<Homework>;
 }

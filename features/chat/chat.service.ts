@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../../core/auth/auth.service';
 
 export interface User {
   id: string;
@@ -26,6 +27,7 @@ export interface Message {
 })
 export class ChatService {
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
   private socket: Socket | null = null;
   private currentUser: User | null = null;
 
@@ -74,7 +76,14 @@ export class ChatService {
   }
 
   getMessagesBetweenUsers(userId1: string, userId2: string): Observable<Message[]> {
-    return this.http.get<Message[]>(`${this.apiUrl}/chat/messages/${userId1}/${userId2}`);
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }) : new HttpHeaders();
+    
+    // Backend expects: GET /chat/messages/:userId (current user to :userId)
+    return this.http.get<Message[]>(`${this.apiUrl}/chat/messages/${userId2}`, { headers });
   }
 
   sendMessage(receiverId: string, content: string): Observable<Message> {
@@ -82,19 +91,23 @@ export class ChatService {
       throw new Error('No current user set');
     }
 
-    const messageData = {
-      senderId: this.currentUser.id,
-      receiverId,
-      content
-    };
-
     // Emit via socket for real-time delivery
     if (this.socket) {
-      this.socket.emit('sendMessage', messageData);
+      this.socket.emit('sendMessage', {
+        senderId: this.currentUser.id,
+        receiverId,
+        content
+      });
     }
 
-    // Also send via HTTP for persistence
-    return this.http.post<Message>(`${this.apiUrl}/chat/messages`, messageData);
+    // Backend expects: POST /chat/messages/:userId with body { content: string }
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }) : new HttpHeaders();
+    
+    return this.http.post<Message>(`${this.apiUrl}/chat/messages/${receiverId}`, { content }, { headers });
   }
 
   markAsRead(senderId: string): Observable<void> {
@@ -102,23 +115,43 @@ export class ChatService {
       throw new Error('No current user set');
     }
 
-    const markReadData = {
-      senderId,
-      receiverId: this.currentUser.id
-    };
-
+    // Emit via socket for real-time delivery
     if (this.socket) {
-      this.socket.emit('markAsRead', markReadData);
+      this.socket.emit('markAsRead', {
+        senderId,
+        receiverId: this.currentUser.id
+      });
     }
 
-    return this.http.put<void>(`${this.apiUrl}/chat/messages/read`, markReadData);
+    // Backend expects: POST /chat/messages/:userId/read (no body needed)
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }) : new HttpHeaders();
+    
+    return this.http.post<void>(`${this.apiUrl}/chat/messages/${senderId}/read`, {}, { headers });
   }
 
   getChatPartners(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/chat/partners`);
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }) : new HttpHeaders();
+    
+    return this.http.get<User[]>(`${this.apiUrl}/chat/partners`, { headers });
   }
 
   getUnreadCount(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/chat/unread`);
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }) : new HttpHeaders();
+    
+    // Backend expects: GET /chat/unread/count
+    return this.http.get<{ count: number }>(`${this.apiUrl}/chat/unread/count`, { headers })
+      .pipe(map(response => response.count));
   }
 }

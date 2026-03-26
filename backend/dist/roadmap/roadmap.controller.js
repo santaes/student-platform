@@ -54,7 +54,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Modules retrieved successfully' }),
     __param(0, (0, common_1.Param)('roadmapId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoadmapController.prototype, "getModules", null);
 __decorate([
@@ -63,7 +63,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Lessons retrieved successfully' }),
     __param(0, (0, common_1.Param)('moduleId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoadmapController.prototype, "getLessons", null);
 __decorate([
@@ -72,7 +72,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Lesson details retrieved successfully' }),
     __param(0, (0, common_1.Param)('lessonId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], RoadmapController.prototype, "getLessonDetails", null);
 __decorate([
@@ -83,7 +83,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_progress_dto_1.UpdateProgressDto, Object]),
+    __metadata("design:paramtypes", [Number, update_progress_dto_1.UpdateProgressDto, Object]),
     __metadata("design:returntype", Promise)
 ], RoadmapController.prototype, "updateProgress", null);
 exports.RoadmapController = RoadmapController = __decorate([

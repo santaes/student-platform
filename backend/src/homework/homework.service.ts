@@ -22,7 +22,7 @@ export class HomeworkService {
     private userRepository: Repository<User>,
   ) {}
 
-  async getHomework(userId: string, status?: HomeworkStatus) {
+  async getHomework(userId: number, status?: HomeworkStatus) {
     const query = this.homeworkRepository
       .createQueryBuilder('homework')
       .leftJoinAndSelect('homework.attachments', 'attachments')
@@ -47,7 +47,7 @@ export class HomeworkService {
     });
   }
 
-  async getHomeworkById(homeworkId: string): Promise<Homework> {
+  async getHomeworkById(homeworkId: number): Promise<Homework> {
     return this.homeworkRepository.findOne({
       where: { id: homeworkId, isActive: true },
       relations: ['attachments', 'submissions', 'lesson'],
@@ -67,7 +67,7 @@ export class HomeworkService {
     return this.homeworkRepository.save(homework);
   }
 
-  async submitHomework(userId: string, homeworkId: string, submitHomeworkDto: SubmitHomeworkDto) {
+  async submitHomework(userId: number, homeworkId: number, submitHomeworkDto: SubmitHomeworkDto) {
     const homework = await this.getHomeworkById(homeworkId);
     
     if (!homework) {
@@ -102,7 +102,7 @@ export class HomeworkService {
     return savedSubmission;
   }
 
-  async markHomeworkCompleted(userId: string, homeworkId: string) {
+  async markHomeworkCompleted(userId: number, homeworkId: number) {
     const homework = await this.getHomeworkById(homeworkId);
     
     if (!homework) {

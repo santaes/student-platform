@@ -12,7 +12,7 @@ export declare class AuthService {
     login(loginDto: LoginDto): Promise<{
         access_token: string;
         user: {
-            id: string;
+            id: number;
             email: string;
             role: UserRole;
             studentProfile: StudentProfile;
@@ -21,11 +21,11 @@ export declare class AuthService {
     register(registerDto: RegisterDto): Promise<{
         access_token: string;
         user: {
-            id: string;
+            id: number;
             email: string;
             role: UserRole;
             studentProfile: StudentProfile;
         };
     }>;
-    getUserProfile(userId: string): Promise<User>;
+    getUserProfile(userId: number): Promise<User>;
 }

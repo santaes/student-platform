@@ -4,6 +4,6 @@ export declare class ResourcesService {
     private resourceRepository;
     constructor(resourceRepository: Repository<Resource>);
     getResources(): Promise<Resource[]>;
-    getResourceById(id: string): Promise<Resource>;
+    getResourceById(id: number): Promise<Resource>;
     createResource(createResourceDto: any): Promise<Resource[]>;
 }

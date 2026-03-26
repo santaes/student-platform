@@ -20,7 +20,7 @@ export class RoadmapService {
     private lessonProgressRepository: Repository<LessonProgress>,
   ) {}
 
-  async getRoadmap(userId: string) {
+  async getRoadmap(userId: number) {
     // For now, return the first active roadmap
     // In a real app, you'd assign roadmaps to users
     const roadmap = await this.roadmapRepository.findOne({
@@ -54,7 +54,7 @@ export class RoadmapService {
     return roadmap;
   }
 
-  async getModules(roadmapId: string) {
+  async getModules(roadmapId: number) {
     return this.moduleRepository.find({
       where: { roadmap: { id: roadmapId }, isActive: true },
       relations: ['lessons'],
@@ -62,21 +62,21 @@ export class RoadmapService {
     });
   }
 
-  async getLessons(moduleId: string) {
+  async getLessons(moduleId: number) {
     return this.lessonRepository.find({
       where: { module: { id: moduleId }, isActive: true },
       order: { order: 'ASC' },
     });
   }
 
-  async getLessonDetails(lessonId: string) {
+  async getLessonDetails(lessonId: number) {
     return this.lessonRepository.findOne({
       where: { id: lessonId, isActive: true },
       relations: ['module', 'module.roadmap'],
     });
   }
 
-  async updateLessonProgress(userId: string, lessonId: string, status: LessonStatus, progressPercentage: number) {
+  async updateLessonProgress(userId: number, lessonId: number, status: LessonStatus, progressPercentage: number) {
     const existingProgress = await this.lessonProgressRepository.findOne({
       where: { student: { id: userId }, lesson: { id: lessonId } },
     });

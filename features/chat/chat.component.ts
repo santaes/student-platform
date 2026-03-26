@@ -282,6 +282,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor() {
     effect(() => {
       const user = this.authService.getCurrentUser();
+      console.log('🔍 ChatComponent: Effect triggered, user:', user?.id, user?.email);
       if (user) {
         this.currentUser.set({
           id: user.id,
@@ -309,8 +310,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   loadChatPartners(): void {
+    console.log('🔍 ChatComponent: Loading chat partners');
     this.chatService.getChatPartners().subscribe({
       next: (partners: User[]) => {
+        console.log('🔍 ChatComponent: Received partners from API:', partners.length, partners);
         this.chatPartners.set(partners);
       },
       error: (error: any) => {

@@ -27,8 +27,8 @@ let Homework = class Homework {
 exports.Homework = Homework;
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Homework ID' }),
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
-    __metadata("design:type", String)
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
 ], Homework.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Homework title' }),
