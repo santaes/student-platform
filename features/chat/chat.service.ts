@@ -58,7 +58,14 @@ export class ChatService {
       console.log('Disconnected from chat server');
     });
 
-    this.socket.on('message', (message: Message) => {
+    this.socket.on('newMessage', (message: Message) => {
+      console.log('🔍 Frontend: Received newMessage via socket:', message);
+      const currentMessages = this.messagesSubject.value;
+      this.messagesSubject.next([...currentMessages, message]);
+    });
+
+    this.socket.on('messageSent', (message: Message) => {
+      console.log('🔍 Frontend: Received messageSent via socket:', message);
       const currentMessages = this.messagesSubject.value;
       this.messagesSubject.next([...currentMessages, message]);
     });
@@ -83,7 +90,15 @@ export class ChatService {
     }) : new HttpHeaders();
     
     // Backend expects: GET /chat/messages/:userId (current user to :userId)
-    return this.http.get<Message[]>(`${this.apiUrl}/chat/messages/${userId2}`, { headers });
+    return this.http.get<Message[]>(`${this.apiUrl}/chat/messages/${userId2}`, { headers })
+      .pipe(
+        map(messages => {
+          console.log('🔍 Frontend: Loaded messages from API:', messages.length);
+          // Update the service's message state with the loaded messages
+          this.messagesSubject.next(messages);
+          return messages;
+        })
+      );
   }
 
   sendMessage(receiverId: string, content: string): Observable<Message> {
@@ -140,7 +155,15 @@ export class ChatService {
       'Content-Type': 'application/json'
     }) : new HttpHeaders();
     
-    return this.http.get<User[]>(`${this.apiUrl}/chat/partners`, { headers });
+    console.log('🔍 Frontend: Making request to chat partners API');
+    return this.http.get<User[]>(`${this.apiUrl}/chat/partners`, { headers })
+      .pipe(
+        map(response => {
+          console.log('🔍 Frontend: Raw API response:', response);
+          console.log('🔍 Frontend: Raw response length:', response.length);
+          return response;
+        })
+      );
   }
 
   getUnreadCount(): Observable<number> {

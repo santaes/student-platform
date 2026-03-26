@@ -68,7 +68,7 @@ import { Subscription } from 'rxjs';
 
           <div class="messages-container" #messagesContainer>
             <div
-              *ngFor="let message of messages()"
+              *ngFor="let message of messages$ | async"
               class="message"
               [class.sent]="message.senderId === currentUser()?.id"
               [class.received]="message.senderId !== currentUser()?.id"
@@ -269,14 +269,14 @@ import { Subscription } from 'rxjs';
   `]
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  private chatService = inject(ChatService);
   private authService = inject(AuthService);
-
-  chatPartners = signal<User[]>([]);
-  selectedPartner = signal<User | null>(null);
-  messages = signal<Message[]>([]);
+  private chatService = inject(ChatService);
+  
   currentUser = signal<User | null>(null);
+  selectedPartner = signal<User | null>(null);
   newMessage = '';
+  messages$ = this.chatService.messages$;
+  chatPartners = signal<User[]>([]);
   private subscriptions: Subscription[] = [];
 
   constructor() {
@@ -296,9 +296,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Subscribe to message changes for scroll-to-bottom
     this.subscriptions.push(
-      this.chatService.messages$.subscribe((messages: Message[]) => {
-        this.messages.set(messages);
+      this.chatService.messages$.subscribe(() => {
         this.scrollToBottom();
       })
     );
@@ -335,7 +335,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.chatService.getMessagesBetweenUsers(this.currentUser()!.id, partnerId).subscribe({
       next: (messages) => {
-        this.messages.set(messages);
+        console.log('🔍 ChatComponent: Messages loaded via service:', messages.length);
         this.scrollToBottom();
       },
       error: (error) => {
@@ -364,11 +364,15 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   getUnreadCountForPartner(partnerId: string): number {
-    return this.messages().filter(msg =>
-      msg.senderId === partnerId &&
-      msg.receiverId === this.currentUser()?.id &&
-      !msg.isRead
-    ).length;
+    let unreadCount = 0;
+    this.messages$.subscribe(messages => {
+      unreadCount = messages.filter((msg: Message) =>
+        msg.senderId === partnerId &&
+        msg.receiverId === this.currentUser()?.id &&
+        !msg.isRead
+      ).length;
+    }).unsubscribe();
+    return unreadCount;
   }
 
   formatMessageTime(date: Date | string): string {

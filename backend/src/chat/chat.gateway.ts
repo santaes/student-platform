@@ -72,6 +72,16 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
           receiverId: message.receiverId,
           content: message.content,
           createdAt: message.createdAt,
+          sender: {
+            id: message.sender.id,
+            fullName: message.sender.studentProfile?.fullName || message.sender.email,
+            email: message.sender.email
+          },
+          receiver: {
+            id: message.receiver.id,
+            fullName: message.receiver.studentProfile?.fullName || message.receiver.email,
+            email: message.receiver.email
+          }
         });
       }
 
@@ -82,6 +92,16 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         receiverId: message.receiverId,
         content: message.content,
         createdAt: message.createdAt,
+        sender: {
+          id: message.sender.id,
+          fullName: message.sender.studentProfile?.fullName || message.sender.email,
+          email: message.sender.email
+        },
+        receiver: {
+          id: message.receiver.id,
+          fullName: message.receiver.studentProfile?.fullName || message.receiver.email,
+          email: message.receiver.email
+        }
       });
     } catch (error) {
       client.emit('error', { message: error.message });

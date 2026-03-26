@@ -27,7 +27,7 @@ export class AuthService {
     this.checkAuthStatus();
   }
 
-  private checkAuthStatus(): void {
+  public checkAuthStatus(): void {
     if (this.isBrowser) {
       try {
         const token = localStorage.getItem('authToken');

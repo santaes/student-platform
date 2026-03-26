@@ -8,7 +8,7 @@ import { NavigationComponent } from '../shared/components/navigation.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/public',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   },
   {
@@ -68,6 +68,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/public'
+    redirectTo: '/dashboard'
   }
 ];

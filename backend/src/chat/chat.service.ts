@@ -19,14 +19,20 @@ export class ChatService {
         { senderId: userId1, receiverId: userId2 },
         { senderId: userId2, receiverId: userId1 },
       ],
-      relations: ['sender', 'receiver'],
+      relations: ['sender.studentProfile', 'receiver.studentProfile'],
       order: { createdAt: 'ASC' },
     });
   }
 
   async sendMessage(senderId: number, receiverId: number, content: string): Promise<Message> {
-    const sender = await this.userRepository.findOne({ where: { id: senderId } });
-    const receiver = await this.userRepository.findOne({ where: { id: receiverId } });
+    const sender = await this.userRepository.findOne({ 
+      where: { id: senderId },
+      relations: ['studentProfile']
+    });
+    const receiver = await this.userRepository.findOne({ 
+      where: { id: receiverId },
+      relations: ['studentProfile']
+    });
 
     if (!sender || !receiver) {
       throw new Error('Sender or receiver not found');
@@ -75,25 +81,26 @@ export class ChatService {
     console.log('🔍 Backend: Sent messages receivers:', sentMessages.map(m => ({ id: m.receiver.id, email: m.receiver.email })));
     console.log('🔍 Backend: Received messages senders:', receivedMessages.map(m => ({ id: m.sender.id, email: m.sender.email })));
 
-    const partners = new Set<User>();
+    // Use Map with user ID as key to ensure uniqueness
+    const partners = new Map<number, User>();
     sentMessages.forEach(msg => {
       console.log(`🔍 Backend: Adding receiver: ${msg.receiver.id} - ${msg.receiver.email}`);
-      partners.add(msg.receiver);
+      if (msg.receiver.id !== userId) {
+        partners.set(msg.receiver.id, msg.receiver);
+      }
     });
     receivedMessages.forEach(msg => {
       console.log(`🔍 Backend: Adding sender: ${msg.sender.id} - ${msg.sender.email}`);
-      partners.add(msg.sender);
+      if (msg.sender.id !== userId) {
+        partners.set(msg.sender.id, msg.sender);
+      }
     });
 
-    console.log(`🔍 Backend: Set size before filtering: ${partners.size}`);
-    console.log('🔍 Backend: Set contents:', Array.from(partners).map(u => ({ id: u.id, email: u.email })));
+    console.log(`🔍 Backend: Map size: ${partners.size}`);
+    console.log('🔍 Backend: Map contents:', Array.from(partners.values()).map(u => ({ id: u.id, email: u.email })));
 
-    // Convert Set to Array and remove the current user if somehow included
-    const partnersArray = Array.from(partners).filter(user => {
-      const shouldInclude = user.id !== userId;
-      console.log(`🔍 Backend: User ${user.id} - ${user.email}, include: ${shouldInclude}`);
-      return shouldInclude;
-    });
+    // Convert Map values to Array
+    const partnersArray = Array.from(partners.values());
 
     console.log(`🔍 Backend: Final partners list: ${partnersArray.length} users`);
     console.log('🔍 Backend: Final partners:', partnersArray.map(p => ({ id: p.id, email: p.email })));
