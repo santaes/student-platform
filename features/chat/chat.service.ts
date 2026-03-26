@@ -33,6 +33,14 @@ export class ChatService {
 
   private messagesSubject = new BehaviorSubject<Message[]>([]);
   public messages$ = this.messagesSubject.asObservable();
+  
+  // Store messages per conversation
+  private conversationMessages = new Map<string, Message[]>();
+  private currentConversationSubject = new BehaviorSubject<string>('');
+  public currentConversation$ = this.currentConversationSubject.asObservable();
+  
+  // Track loading state to prevent duplicate API calls
+  private loadingConversations = new Set<string>();
 
   private apiUrl = environment.apiUrl;
 
@@ -60,14 +68,12 @@ export class ChatService {
 
     this.socket.on('newMessage', (message: Message) => {
       console.log('🔍 Frontend: Received newMessage via socket:', message);
-      const currentMessages = this.messagesSubject.value;
-      this.messagesSubject.next([...currentMessages, message]);
+      this.addMessageToConversation(message);
     });
 
     this.socket.on('messageSent', (message: Message) => {
       console.log('🔍 Frontend: Received messageSent via socket:', message);
-      const currentMessages = this.messagesSubject.value;
-      this.messagesSubject.next([...currentMessages, message]);
+      this.addMessageToConversation(message);
     });
 
     this.socket.on('messagesRead', (data: { senderId: string; receiverId: string }) => {
@@ -82,7 +88,46 @@ export class ChatService {
     }
   }
 
+  private addMessageToConversation(message: Message): void {
+    const conversationKey = this.getConversationKey(message.senderId, message.receiverId);
+    const currentMessages = this.conversationMessages.get(conversationKey) || [];
+    
+    // Check if message already exists to prevent duplicates
+    const messageExists = currentMessages.some(msg => msg.id === message.id);
+    if (messageExists) {
+      console.log('🔍 Frontend: Message already exists, skipping:', message.id);
+      return;
+    }
+    
+    this.conversationMessages.set(conversationKey, [...currentMessages, message]);
+    
+    // Update current messages if this is the active conversation
+    if (this.currentConversationSubject.value === conversationKey) {
+      this.messagesSubject.next(this.conversationMessages.get(conversationKey) || []);
+    }
+  }
+
+  private getConversationKey(userId1: string, userId2: string): string {
+    return [userId1, userId2].sort().join('-');
+  }
+
+  setCurrentConversation(userId1: string, userId2: string): void {
+    const conversationKey = this.getConversationKey(userId1, userId2);
+    this.currentConversationSubject.next(conversationKey);
+    this.messagesSubject.next(this.conversationMessages.get(conversationKey) || []);
+  }
+
   getMessagesBetweenUsers(userId1: string, userId2: string): Observable<Message[]> {
+    const conversationKey = this.getConversationKey(userId1, userId2);
+    
+    // Prevent duplicate API calls
+    if (this.loadingConversations.has(conversationKey)) {
+      console.log('🔍 Frontend: Already loading conversation, skipping API call:', conversationKey);
+      return this.messagesSubject.asObservable();
+    }
+    
+    this.loadingConversations.add(conversationKey);
+    
     const token = this.authService.getToken();
     const headers = token ? new HttpHeaders({
       'Authorization': `Bearer ${token}`,
@@ -94,8 +139,14 @@ export class ChatService {
       .pipe(
         map(messages => {
           console.log('🔍 Frontend: Loaded messages from API:', messages.length);
-          // Update the service's message state with the loaded messages
-          this.messagesSubject.next(messages);
+          this.conversationMessages.set(conversationKey, messages);
+          
+          // Update current messages if this is the active conversation
+          if (this.currentConversationSubject.value === conversationKey) {
+            this.messagesSubject.next(messages);
+          }
+          
+          this.loadingConversations.delete(conversationKey);
           return messages;
         })
       );

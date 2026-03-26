@@ -325,6 +325,10 @@ export class ChatComponent implements OnInit, OnDestroy {
   selectPartner(partner: User): void {
     this.selectedPartner.set(partner);
     if (this.currentUser()) {
+      // Set current conversation first
+      this.chatService.setCurrentConversation(this.currentUser()!.id, partner.id);
+      
+      // Only load messages if they're not already loaded
       this.loadMessages(partner.id);
       this.chatService.markAsRead(partner.id).subscribe();
     }
@@ -347,18 +351,21 @@ export class ChatComponent implements OnInit, OnDestroy {
   sendMessage(): void {
     if (!this.newMessage.trim() || !this.selectedPartner() || !this.currentUser()) return;
 
-    const content = this.newMessage.trim();
+    const messageContent = this.newMessage.trim();
     this.newMessage = '';
 
-    this.chatService.sendMessage(this.selectedPartner()!.id, content).subscribe({
-      next: (message: Message) => {
-        // Message will be added via socket listener
-        this.scrollToBottom();
+    // Ensure current conversation is set
+    this.chatService.setCurrentConversation(this.currentUser()!.id, this.selectedPartner()!.id);
+
+    this.chatService.sendMessage(this.selectedPartner()!.id, messageContent).subscribe({
+      next: (message) => {
+        console.log('🔍 ChatComponent: Message sent successfully:', message);
+        // Message will be added via socket event, so no need to manually add
       },
-      error: (error: any) => {
+      error: (error) => {
         console.error('Error sending message:', error);
         // Restore message on error
-        this.newMessage = content;
+        this.newMessage = messageContent;
       }
     });
   }

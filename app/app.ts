@@ -1,5 +1,5 @@
 import { Component, signal, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { AuthService } from '../core/auth/auth.service';
 
 @Component({
@@ -28,6 +28,19 @@ import { AuthService } from '../core/auth/auth.service';
 export class App {
   protected readonly title = signal('student-learning-platform');
   authService = inject(AuthService);
+  router = inject(Router);
+
+  constructor() {
+    // Handle initial redirect after auth is checked
+    setTimeout(() => {
+      if (this.authService.isAuthChecked() && this.authService.isLoggedIn()) {
+        // If user is logged in and on public page, redirect to dashboard
+        if (this.router.url === '/public' || this.router.url === '/') {
+          this.router.navigate(['/dashboard']);
+        }
+      }
+    }, 100);
+  }
 
   hasToken(): boolean {
     if (typeof window !== 'undefined') {
