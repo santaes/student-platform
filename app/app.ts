@@ -13,12 +13,12 @@ import { AuthService } from '../core/auth/auth.service';
           <p>Loading...</p>
         </div>
       } @else {
-        <div class="debug-info">
+       <!--  <div class="debug-info">
           <p>Auth checked: {{ authService.isAuthChecked() }}</p>
           <p>Is logged in: {{ authService.isLoggedIn() }}</p>
           <p>Token exists: {{ hasToken() }}</p>
           <p>User exists: {{ hasUser() }}</p>
-        </div>
+        </div> -->
         <router-outlet></router-outlet>
       }
     </div>
